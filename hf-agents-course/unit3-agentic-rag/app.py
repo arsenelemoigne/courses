@@ -8,7 +8,7 @@
 # Course code, except STEP 6: the course uses InferenceClientModel (Hugging
 # Face's paid servers). We use OpenAIServerModel instead, which talks to any
 # OpenAI-compatible server, exactly like Lupin: your Qwen in Ollama, or
-# DeepSeek on OpenRouter (key read from Lupin's .env file).
+# DeepSeek through an online API (address and key read from a local .env file).
 #
 # Run:  python3 app.py
 # ============================================================================
@@ -29,9 +29,9 @@ from retriever import load_guest_dataset
 # ----------------------------------------------------------------------------
 MODEL = "deepseek/deepseek-v4-flash-0731"
 
-load_dotenv()   # loads OPENROUTER_API_KEY
+load_dotenv()   # loads LLM_API_URL and LLM_API_KEY
 LOCAL = ("http://localhost:11434/v1", "ollama")
-ONLINE = ("https://openrouter.ai/api/v1", os.environ.get("OPENROUTER_API_KEY"))
+ONLINE = (os.environ.get("LLM_API_URL"), os.environ.get("LLM_API_KEY"))
 WHERE = {
     "qwen3:1.7b": LOCAL,
     "deepseek/deepseek-v4-flash-0731": ONLINE,
